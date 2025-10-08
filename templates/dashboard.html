@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Flask Login Dashboard{% endblock %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="user-info">
+    {% if user.avatar_url %}
+    <img src="{{ user.avatar_url }}" alt="{{ user.username }}">
+    {% else %}
+    <img src="https://via.placeholder.com/60" alt="User Avatar">
+    {% endif %}
+    <div>
+        <h3>{{ user.username }}</h3>
+        <p>{{ user.email or 'No email provided' }}</p>
+        <p style="font-size: 0.8rem; color: #999;">Logged in via {{ user.oauth_provider|capitalize }}</p>
+    </div>
+</div>
+
+<p style="margin: 1.5rem 0; color: #666;">
+    Welcome to your dashboard! You've successfully authenticated using {{ user.oauth_provider|capitalize }}.
+</p>
+
+<p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+    <strong>Account Details:</strong>
+</p>
+<ul style="list-style: none; padding-left: 0; margin-bottom: 1.5rem;">
+    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+        <strong>User ID:</strong> {{ user.id }}
+    </li>
+    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+        <strong>Username:</strong> {{ user.username }}
+    </li>
+    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+        <strong>Email:</strong> {{ user.email or 'Not provided' }}
+    </li>
+    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+        <strong>Provider:</strong> {{ user.oauth_provider|capitalize }}
+    </li>
+    <li style="padding: 0.5rem 0;">
+        <strong>Member Since:</strong> {{ user.created_at.strftime('%Y-%m-%d') }}
+    </li>
+</ul>
+
+<a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+{% endblock %}
